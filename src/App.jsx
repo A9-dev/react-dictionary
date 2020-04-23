@@ -1,12 +1,21 @@
 import axios from 'axios'
 import { Card, CardContent, TextField, Grid, Button, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
-
+import Snackbar from './Snackbar'
 export class App extends Component {
   state = {
     word: "",
-    definitions: []
+    definitions: [],
+    error: "",
+    open: false
   }
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({ open: false })
+  };
+
   definitionClicked = () => {
     const getDefinitions = async () => {
       const url = `https://wordsapiv1.p.rapidapi.com/words/${this.state.word}/definitions`
@@ -20,7 +29,8 @@ export class App extends Component {
         const definitions = data.definitions
         this.setState({ definitions: definitions })
       } catch (error) {
-        console.log(error);
+
+        this.setState({ error: error.message, open: true })
       }
     }
     getDefinitions()
@@ -28,7 +38,6 @@ export class App extends Component {
   wordChange = (e) => {
     this.setState({ word: e.target.value })
   }
-
 
   render() {
     return (
@@ -57,6 +66,7 @@ export class App extends Component {
               )
             })}
           </Grid>
+          <Snackbar text={this.state.error} open={this.state.open} handleClose={this.handleClose}></Snackbar>
         </div>
       </div >
     )

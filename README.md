@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm startt` 
+### `npm run startt` 
 (yes "startt", "start" is being used for backend purposes)
 
 Runs the app in the development mode.<br />
